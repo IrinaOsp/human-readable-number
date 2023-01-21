@@ -14,10 +14,13 @@ module.exports = function toReadable (number) {
     let str = number.toString();
     let lastTwoNumbers = Number(`${str[str.length-2]}${str[str.length-1]}`);
       
-    if (number<=99) {return `${twoSign[str[0]]}${' '}${oneSign[str[1]]}`}
+    if (number<=99 && str[1]!=0) {return `${twoSign[str[0]]}${' '}${oneSign[str[1]]}`}
+    if (number<=99 && str[1]==0) {return `${twoSign[str[0]]}`}
     
-    if (number<=999 && lastTwoNumbers>19) {return `${oneSign[str[0]]}${' '}${'hundred'}${' '}${twoSign[str[1]]}${' '}${oneSign[str[2]]}`} 
-    if(number<=999 && lastTwoNumbers<=19) {return `${oneSign[str[0]]}${' '}${'hundred'}${' '}${fromOnetoNighteen[lastTwoNumbers]}`} 
+    if (number<=999 && str[2]==0 && str[1]==0) {return `${oneSign[str[0]]}${' '}${'hundred'}`}
+    if (number<=999 && lastTwoNumbers>19 && str[2]!=0) {return `${oneSign[str[0]]}${' '}${'hundred'}${' '}${twoSign[str[1]]}${' '}${oneSign[str[2]]}`} 
+    if (number<=999 && lastTwoNumbers>19 && str[2]==0) {return `${oneSign[str[0]]}${' '}${'hundred'}${' '}${twoSign[str[1]]}`} 
+    if (number<=999 && lastTwoNumbers<=19) {return `${oneSign[str[0]]}${' '}${'hundred'}${' '}${fromOnetoNighteen[lastTwoNumbers]}`} 
     
     if (number<=9999 && lastTwoNumbers>19) {return `${oneSign[str[0]]}${' '}${'thousand'}${' '}${oneSign[str[1]]}${' '}${'hundred'}${' '}${twoSign[str[2]]}${' '}${oneSign[str[3]]}`} 
     if (number<=9999 && lastTwoNumbers<=19) {return `${oneSign[str[0]]}${' '}${'thousand'}${' '}${oneSign[str[1]]}${' '}${'hundred'}${' '}${fromOnetoNighteen[lastTwoNumbers]}`} 
